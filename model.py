@@ -215,63 +215,40 @@ sc_bow.train()
 preds_bow = sc_bow.predict(testData['message'])
 metrics(testData['label'], preds_bow)
 
-# Predictions with TF-IDF
+# Predictions with TF-IDF & BOW (Bag of Words)
 
 # Depressive Tweets
 
-pm = process_message('Lately I have been feeling unsure of myself as a person & an artist')
+pm = process_message('Feeling hopeless, depressed and miserable all the time.')
 sc_tf_idf.classify(pm)
-
-pm = process_message('Extreme sadness, lack of energy, hopelessness')
-sc_tf_idf.classify(pm)
-
-pm = process_message('Hi hello depression and anxiety are the worst')
-sc_tf_idf.classify(pm)
-
-pm = process_message('I am officially done with @kanyewest')
-sc_tf_idf.classify(pm)
-
-pm = process_message('Feeling down...')
-sc_tf_idf.classify(pm)
-
-pm = process_message('My depression will not let me work out')
-sc_tf_idf.classify(pm)
-
-"""# Positive Tweets"""
-
-pm = process_message('Loving how me and my lovely partner is talking about what we want.')
-sc_tf_idf.classify(pm)
-
-pm = process_message('Very rewarding when a patient hugs you and tells you they feel great after changing the diet and daily habits')
-sc_tf_idf.classify(pm)
-
-pm = process_message('Happy Thursday everyone. Thought today was Wednesday so super happy tomorrow is Friday yayyyyy')
-sc_tf_idf.classify(pm)
-
-pm = process_message('It’s the little things that make me smile. Got our new car today and this arrived with it')
-sc_tf_idf.classify(pm)
-
-"""# Predictions with Bag-of-Words (BOW)
-
-# Depressive tweets
-"""
-
-pm = process_message('Hi hello depression and anxiety are the worst')
 sc_bow.classify(pm)
 
-pm = process_message('My depression will not let me work out')
+pm = process_message('Why do I always feel like I could cry at any moment?')
+sc_tf_idf.classify(pm)
 sc_bow.classify(pm)
 
-pm = process_message('Feeling down...')
+pm = process_message('I am never going to lose 20lbs - why even bother trying?')
+sc_tf_idf.classify(pm)
 sc_bow.classify(pm)
 
-"""# Positive Tweets"""
-
-pm = process_message('Loving how me and my lovely partner is talking about what we want.')
+pm = process_message('All I want is to feel happy and fulfilled again...')
+sc_tf_idf.classify(pm)
 sc_bow.classify(pm)
 
-pm = process_message('Very rewarding when a patient hugs you and tells you they feel great after changing the diet and daily habits')
+# Positive Tweets
+
+pm = process_message('Feeling happy, motivated, and ready to make a positive difference in the world!')
+sc_tf_idf.classify(pm)
 sc_bow.classify(pm)
 
-pm = process_message('Happy Thursday everyone. Thought today was Wednesday so super happy tomorrow is Friday yayyyyy')
+pm = process_message('My baby boy just said his first words - feeling over the moon!')
+sc_tf_idf.classify(pm)
+sc_bow.classify(pm)
+
+pm = process_message('1382  Willis Avenue. *The* best ice cream. Thank me later.')
+sc_tf_idf.classify(pm)
+sc_bow.classify(pm)
+
+pm = process_message('Literally crazy to look back at old pictures of my overweight, demotivated, depressed 14 year old self.')
+sc_tf_idf.classify(pm)
 sc_bow.classify(pm)
