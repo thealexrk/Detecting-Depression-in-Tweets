@@ -245,7 +245,7 @@ pm = process_message('My baby boy just said his first words - feeling over the m
 sc_tf_idf.classify(pm)
 sc_bow.classify(pm)
 
-pm = process_message('1382  Willis Avenue. *The* best ice cream. Thank me later.')
+pm = process_message('1382  Willis Avenue. THE best ice cream. Thank me later.')
 sc_tf_idf.classify(pm)
 sc_bow.classify(pm)
 
