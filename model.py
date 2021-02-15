@@ -23,7 +23,7 @@ tweets['label'].value_counts()
 totalTweets = 8000 + 2314
 trainIndex, testIndex = list(), list()
 for i in range(tweets.shape[0]):
-    if np.random.uniform(0, 1) < 0.98:
+    if np.random.uniform(0, 1) < 0.7:
         trainIndex += [i]
     else:
         testIndex += [i]
@@ -43,19 +43,19 @@ testData.head()
 # Wordcloud Analysis
 
 depressive_words = ' '.join(list(tweets[tweets['label'] == 1]['message']))
-depressive_wc = WordCloud(width = 512,height = 512, collocations=False, colormap="Blues").generate(depressive_words)
-plt.figure(figsize = (10, 8), facecolor = 'k')
+depressive_wc = WordCloud(width=1024, height=512, collocations=False).generate(depressive_words)
+plt.figure(figsize=(10, 5), facecolor='k')
 plt.imshow(depressive_wc)
 plt.axis('off')
-plt.tight_layout(pad = 0)
+plt.tight_layout(pad=0)
 plt.show()
 
 positive_words = ' '.join(list(tweets[tweets['label'] == 0]['message']))
-positive_wc = WordCloud(width = 512,height = 512, collocations=False, colormap="Blues").generate(positive_words)
-plt.figure(figsize = (10, 8), facecolor = 'k')
+positive_wc = WordCloud(background_color='white', width=1024, height=512, collocations=False).generate(positive_words)
+plt.figure(figsize=(10, 5), facecolor='k')
 plt.imshow(positive_wc)
-plt.axis('off'), 
-plt.tight_layout(pad = 0)
+plt.axis('off'),
+plt.tight_layout(pad=0)
 plt.show()
 
 # Pre-processing the data for the training: Tokenization, stemming, and removal of stop words
