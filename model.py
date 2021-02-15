@@ -128,7 +128,6 @@ class TweetClassifier(object):
                     self.idf_depressive[word] = self.idf_depressive.get(word, 0) + 1
                 else:
                     self.idf_positive[word] = self.idf_positive.get(word, 0) + 1
-
                     
     def classify(self, processed_message):
         pDepressive, pPositive = 0, 0
