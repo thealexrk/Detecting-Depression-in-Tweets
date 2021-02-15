@@ -14,7 +14,7 @@ import re
 
 # The Dataset
 
-tweets = pd.read_csv('sentiment_tweets3.csv')
+tweets = pd.read_csv('dataset.csv')
 tweets.drop(['Unnamed: 0'], axis = 1, inplace = True)
 tweets['label'].value_counts()
 
