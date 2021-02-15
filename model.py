@@ -18,28 +18,6 @@ tweets = pd.read_csv('dataset.csv')
 tweets.drop(['Unnamed: 0'], axis = 1, inplace = True)
 tweets['label'].value_counts()
 
-# Splitting the Data in Training and Testing Sets
-
-totalTweets = 8000 + 2314
-trainIndex, testIndex = list(), list()
-for i in range(tweets.shape[0]):
-    if np.random.uniform(0, 1) < 0.7:
-        trainIndex += [i]
-    else:
-        testIndex += [i]
-trainData = tweets.iloc[trainIndex]
-testData = tweets.iloc[testIndex]
-
-tweets.info()
-
-trainData['label'].value_counts()
-
-trainData.head()
-
-testData['label'].value_counts()
-
-testData.head()
-
 # Wordcloud Analysis
 
 depressive_words = ' '.join(list(tweets[tweets['label'] == 1]['message']))
@@ -57,6 +35,22 @@ plt.imshow(positive_wc)
 plt.axis('off'),
 plt.tight_layout(pad=0)
 plt.show()
+
+# Splitting the Data in Training and Testing Sets
+
+totalTweets = 8000 + 2314
+trainIndex, testIndex = list(), list()
+for i in range(tweets.shape[0]):
+    if np.random.uniform(0, 1) < 0.7:
+        trainIndex += [i]
+    else:
+        testIndex += [i]
+trainData = tweets.iloc[trainIndex]
+testData = tweets.iloc[testIndex]
+
+trainData['label'].value_counts()
+
+testData['label'].value_counts()
 
 # Pre-processing the data for the training: Tokenization, stemming, and removal of stop words
 
