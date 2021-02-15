@@ -17,7 +17,6 @@ import re
 # Loading the Data
 
 tweets = pd.read_csv('sentiment_tweets3.csv')
-tweets.head(20)
 
 tweets.drop(['Unnamed: 0'], axis = 1, inplace = True)
 
