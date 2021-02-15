@@ -52,7 +52,7 @@ trainData['label'].value_counts()
 
 testData['label'].value_counts()
 
-# Pre-processing the data for the training: Tokenization, stemming, and removal of stop words
+# Data Pre-processing
 
 def process_message(message, lower_case = True, stem = True, stop_words = True, gram = 2):
     if lower_case:
@@ -71,6 +71,8 @@ def process_message(message, lower_case = True, stem = True, stop_words = True, 
         stemmer = PorterStemmer()
         words = [stemmer.stem(word) for word in words]   
     return words
+
+# Training the DDM
 
 class TweetClassifier(object):
     def __init__(self, trainData, method = 'tf-idf'):
