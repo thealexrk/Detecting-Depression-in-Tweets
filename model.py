@@ -36,7 +36,7 @@ plt.axis('off')
 plt.tight_layout(pad=0)
 plt.show()
 
-# Splitting the Data in Training and Testing Sets
+# Training and Testing Data
 
 totalTweets = 8000 + 2314
 trainIndex, testIndex = list(), list()
@@ -174,6 +174,8 @@ class TweetClassifier(object):
             processed_message = process_message(message)
             result[i] = int(self.classify(processed_message))
         return result
+    
+#l
 
 def metrics(labels, predictions):
     true_pos, true_neg, false_pos, false_neg = 0, 0, 0, 0
