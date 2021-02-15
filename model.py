@@ -1,7 +1,5 @@
-# Installing and Importing libraries
+# Installing and Importing Libraries
 
-!pip install wordcloud
-!pip install nltk
 import nltk
 nltk.download('punkt')
 from nltk.tokenize import word_tokenize
