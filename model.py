@@ -98,8 +98,7 @@ class TweetClassifier(object):
             self.sum_tf_idf_positive += self.prob_positive[word]
         for word in self.tf_positive:
             self.prob_positive[word] = (self.prob_positive[word] + 1) / (self.sum_tf_idf_positive + len(list(self.prob_positive.keys())))            
-        self.prob_depressive_tweet, self.prob_positive_tweet = self.depressive_tweets / self.total_tweets, self.positive_tweets / self.total_tweets 
-        
+        self.prob_depressive_tweet, self.prob_positive_tweet = self.depressive_tweets / self.total_tweets, self.positive_tweets / self.total_tweets         
         
     def calc_TF_and_IDF(self):
         noOfMessages = self.tweets.shape[0]
@@ -187,8 +186,6 @@ metrics(testData['label'], preds_tf_idf)
 
 # Predictions
 
-# Depressive Tweets
-
 pm = process_message('Feeling hopeless, depressed and miserable all the time.')
 sc_tf_idf.classify(pm)
 
@@ -200,8 +197,6 @@ sc_tf_idf.classify(pm)
 
 pm = process_message('All I want is to feel happy and fulfilled again...')
 sc_tf_idf.classify(pm)
-
-# Positive Tweets
 
 pm = process_message('Feeling happy, motivated, and ready to make a positive difference in the world!')
 sc_tf_idf.classify(pm)
