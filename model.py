@@ -159,8 +159,13 @@ class TweetClassifier(object):
             processed_message = process_message(message)
             result[i] = int(self.classify(processed_message))
         return result
-    
-# Result Preparation
+
+# Training the DDM    
+
+sc_tf_idf = TweetClassifier(trainData, 'tf-idf')
+sc_tf_idf.train()
+
+# Results
 
 def metrics(labels, predictions):
     true_pos, true_neg, false_pos, false_neg = 0, 0, 0, 0
@@ -179,10 +184,6 @@ def metrics(labels, predictions):
     print("F-score: ", Fscore)
     print("Accuracy: ", accuracy)
    
-# Training the DDM    
-
-sc_tf_idf = TweetClassifier(trainData, 'tf-idf')
-sc_tf_idf.train()
 preds_tf_idf = sc_tf_idf.predict(testData['message'])
 metrics(testData['label'], preds_tf_idf)
 
