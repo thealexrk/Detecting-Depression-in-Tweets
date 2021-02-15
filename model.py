@@ -72,7 +72,7 @@ def process_message(message, lower_case = True, stem = True, stop_words = True, 
         words = [stemmer.stem(word) for word in words]   
     return words
 
-# Training the DDM
+# Implementing TF-IDF
 
 class TweetClassifier(object):
     def __init__(self, trainData, method = 'tf-idf'):
@@ -83,20 +83,6 @@ class TweetClassifier(object):
         self.calc_TF_and_IDF()
         if self.method == 'tf-idf':
             self.calc_TF_IDF()
-        else:
-            self.calc_prob()
-
-    def calc_prob(self):
-        self.prob_depressive = dict()
-        self.prob_positive = dict()
-        for word in self.tf_depressive:
-            self.prob_depressive[word] = (self.tf_depressive[word] + 1) / (self.depressive_words + \
-                                                                len(list(self.tf_depressive.keys())))
-        for word in self.tf_positive:
-            self.prob_positive[word] = (self.tf_positive[word] + 1) / (self.positive_words + \
-                                                                len(list(self.tf_positive.keys())))
-        self.prob_depressive_tweet, self.prob_positive_tweet = self.depressive_tweets / self.total_tweets, self.positive_tweets / self.total_tweets 
-
 
     def calc_TF_and_IDF(self):
         noOfMessages = self.tweets.shape[0]
@@ -137,16 +123,13 @@ class TweetClassifier(object):
                                                           / (self.idf_depressive[word] + self.idf_positive.get(word, 0)))
             self.sum_tf_idf_depressive += self.prob_depressive[word]
         for word in self.tf_depressive:
-            self.prob_depressive[word] = (self.prob_depressive[word] + 1) / (self.sum_tf_idf_depressive + len(list(self.prob_depressive.keys())))
-            
+            self.prob_depressive[word] = (self.prob_depressive[word] + 1) / (self.sum_tf_idf_depressive + len(list(self.prob_depressive.keys())))          
         for word in self.tf_positive:
             self.prob_positive[word] = (self.tf_positive[word]) * log((self.depressive_tweets + self.positive_tweets) \
                                                           / (self.idf_depressive.get(word, 0) + self.idf_positive[word]))
             self.sum_tf_idf_positive += self.prob_positive[word]
         for word in self.tf_positive:
-            self.prob_positive[word] = (self.prob_positive[word] + 1) / (self.sum_tf_idf_positive + len(list(self.prob_positive.keys())))
-            
-    
+            self.prob_positive[word] = (self.prob_positive[word] + 1) / (self.sum_tf_idf_positive + len(list(self.prob_positive.keys())))            
         self.prob_depressive_tweet, self.prob_positive_tweet = self.depressive_tweets / self.total_tweets, self.positive_tweets / self.total_tweets 
                     
     def classify(self, processed_message):
@@ -177,7 +160,7 @@ class TweetClassifier(object):
             result[i] = int(self.classify(processed_message))
         return result
     
-#l
+# Preparing etc
 
 def metrics(labels, predictions):
     true_pos, true_neg, false_pos, false_neg = 0, 0, 0, 0
@@ -195,51 +178,41 @@ def metrics(labels, predictions):
     print("Recall: ", recall)
     print("F-score: ", Fscore)
     print("Accuracy: ", accuracy)
+   
+# Training the DDM    
 
 sc_tf_idf = TweetClassifier(trainData, 'tf-idf')
 sc_tf_idf.train()
 preds_tf_idf = sc_tf_idf.predict(testData['message'])
 metrics(testData['label'], preds_tf_idf)
 
-sc_bow = TweetClassifier(trainData, 'bow')
-sc_bow.train()
-preds_bow = sc_bow.predict(testData['message'])
-metrics(testData['label'], preds_bow)
 
-# Predictions with TF-IDF & BOW (Bag of Words)
+# Predictions
 
 # Depressive Tweets
 
 pm = process_message('Feeling hopeless, depressed and miserable all the time.')
 sc_tf_idf.classify(pm)
-sc_bow.classify(pm)
 
 pm = process_message('Why do I always feel like I could cry at any moment?')
 sc_tf_idf.classify(pm)
-sc_bow.classify(pm)
 
 pm = process_message('I am never going to lose 20lbs - why even bother trying?')
 sc_tf_idf.classify(pm)
-sc_bow.classify(pm)
 
 pm = process_message('All I want is to feel happy and fulfilled again...')
 sc_tf_idf.classify(pm)
-sc_bow.classify(pm)
 
 # Positive Tweets
 
 pm = process_message('Feeling happy, motivated, and ready to make a positive difference in the world!')
 sc_tf_idf.classify(pm)
-sc_bow.classify(pm)
 
 pm = process_message('My baby boy just said his first words - feeling over the moon!')
 sc_tf_idf.classify(pm)
-sc_bow.classify(pm)
 
 pm = process_message('1382  Willis Avenue. THE best ice cream. Thank me later.')
 sc_tf_idf.classify(pm)
-sc_bow.classify(pm)
 
 pm = process_message('Literally crazy to look back at old pictures of my overweight, demotivated, depressed 14 year old self.')
 sc_tf_idf.classify(pm)
-sc_bow.classify(pm)
