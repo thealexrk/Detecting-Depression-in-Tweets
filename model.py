@@ -1,4 +1,4 @@
-# Installing and importing libraries
+# Installing and Importing libraries
 
 !pip install wordcloud
 !pip install nltk
@@ -14,7 +14,7 @@ import pandas as pd
 import numpy as np
 import re
 
-# Loading the Data
+# The Dataset
 
 tweets = pd.read_csv('sentiment_tweets3.csv')
 
