@@ -72,12 +72,14 @@ def process_message(message, lower_case = True, stem = True, stop_words = True, 
         words = [stemmer.stem(word) for word in words]   
     return words
 
-# Building the TweetClassifier
+# Creating the TweetClassifier Class
 
 class TweetClassifier(object):
     def __init__(self, trainData, method = 'tf-idf'):
         self.tweets, self.labels = trainData['message'], trainData['label']
         self.method = method
+        
+# Defining our Functions        
 
     def train(self):
         self.calc_TF_and_IDF()
@@ -140,15 +142,11 @@ class TweetClassifier(object):
             else:
                 if self.method == 'tf-idf':
                     pDepressive -= log(self.sum_tf_idf_depressive + len(list(self.prob_depressive.keys())))
-                else:
-                    pDepressive -= log(self.depressive_words + len(list(self.prob_depressive.keys())))
             if word in self.prob_positive:
                 pPositive += log(self.prob_positive[word])
             else:
                 if self.method == 'tf-idf':
                     pPositive -= log(self.sum_tf_idf_positive + len(list(self.prob_positive.keys()))) 
-                else:
-                    pPositive -= log(self.positive_words + len(list(self.prob_positive.keys())))
             pDepressive += log(self.prob_depressive_tweet)
             pPositive += log(self.prob_positive_tweet)
         return pDepressive >= pPositive
