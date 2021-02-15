@@ -20,19 +20,19 @@ tweets['label'].value_counts()
 
 # Wordcloud Analysis
 
-depressive_words = ' '.join(list(tweets[tweets['label'] == 1]['message']))
-depressive_wc = WordCloud(width=1024, height=512, collocations=False).generate(depressive_words)
-plt.figure(figsize=(10, 5), facecolor='k')
-plt.imshow(depressive_wc)
-plt.axis('off')
-plt.tight_layout(pad=0)
-plt.show()
-
 positive_words = ' '.join(list(tweets[tweets['label'] == 0]['message']))
 positive_wc = WordCloud(background_color='white', width=1024, height=512, collocations=False).generate(positive_words)
 plt.figure(figsize=(10, 5), facecolor='k')
 plt.imshow(positive_wc)
 plt.axis('off'),
+plt.tight_layout(pad=0)
+plt.show()
+
+depressive_words = ' '.join(list(tweets[tweets['label'] == 1]['message']))
+depressive_wc = WordCloud(width=1024, height=512, collocations=False).generate(depressive_words)
+plt.figure(figsize=(10, 5), facecolor='k')
+plt.imshow(depressive_wc)
+plt.axis('off')
 plt.tight_layout(pad=0)
 plt.show()
 
