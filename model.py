@@ -93,8 +93,7 @@ class TweetClassifier(object):
         self.idf_positive = dict()
         for i in range(noOfMessages):
             message_processed = process_message(self.tweets.iloc[i])
-            count = list() #To keep track of whether the word has ocured in the message or not.
-                           #For IDF
+            count = list() 
             for word in message_processed:
                 if self.labels.iloc[i]:
                     self.tf_depressive[word] = self.tf_depressive.get(word, 0) + 1
