@@ -81,11 +81,6 @@ class TweetClassifier(object):
         
 # Defining our Functions        
 
-    def train(self):
-        self.calc_TF_and_IDF()
-        if self.method == 'tf-idf':
-            self.calc_TF_IDF()
-
     def calc_TF_and_IDF(self):
         noOfMessages = self.tweets.shape[0]
         self.depressive_tweets, self.positive_tweets = self.labels.value_counts()[1], self.labels.value_counts()[0]
@@ -159,6 +154,11 @@ class TweetClassifier(object):
         return result
 
 # Training the DDM    
+
+    def train(self):
+        self.calc_TF_and_IDF()
+        if self.method == 'tf-idf':
+            self.calc_TF_IDF()
 
 sc_tf_idf = TweetClassifier(trainData, 'tf-idf')
 sc_tf_idf.train()
