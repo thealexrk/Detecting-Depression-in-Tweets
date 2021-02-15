@@ -1,6 +1,7 @@
 # Installing and Importing Libraries
 
 import nltk
+
 nltk.download('punkt')
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
@@ -15,7 +16,7 @@ import re
 # The Dataset
 
 tweets = pd.read_csv('dataset.csv')
-tweets.drop(['Unnamed: 0'], axis = 1, inplace = True)
+tweets.drop(['Unnamed: 0'], axis=1, inplace=True)
 tweets['label'].value_counts()
 
 # Wordcloud Analysis
@@ -54,7 +55,7 @@ testData['label'].value_counts()
 
 # Data Pre-processing
 
-def process_message(message, lower_case = True, stem = True, stop_words = True, gram = 2):
+def process_message(message, lower_case=True, stem=True, stop_words=True, gram=2):
     if lower_case:
         message = message.lower()
     words = word_tokenize(message)
@@ -69,38 +70,40 @@ def process_message(message, lower_case = True, stem = True, stop_words = True, 
         words = [word for word in words if word not in sw]
     if stem:
         stemmer = PorterStemmer()
-        words = [stemmer.stem(word) for word in words]   
+        words = [stemmer.stem(word) for word in words]
     return words
 
 # Creating the TweetClassifier Class
 
 class TweetClassifier(object):
-    def __init__(self, trainData, method = 'tf-idf'):
+    
+    def __init__(self, trainData, method='tf-idf'):
         self.tweets, self.labels = trainData['message'], trainData['label']
         self.method = method
-        
-# Defining our Functions        
 
-    def calc_TF_IDF(self):
+# Defining our Functions
+
+    def get_TF_IDF(self):
         self.prob_depressive = dict()
         self.prob_positive = dict()
         self.sum_tf_idf_depressive = 0
         self.sum_tf_idf_positive = 0
         for word in self.tf_depressive:
-            self.prob_depressive[word] = (self.tf_depressive[word]) * log((self.depressive_tweets + self.positive_tweets) \
-                                                          / (self.idf_depressive[word] + self.idf_positive.get(word, 0)))
+            self.prob_depressive[word] = (self.tf_depressive[word]) * log(
+                (self.depressive_tweets + self.positive_tweets) \
+                / (self.idf_depressive[word] + self.idf_positive.get(word, 0)))
             self.sum_tf_idf_depressive += self.prob_depressive[word]
         for word in self.tf_depressive:
-            self.prob_depressive[word] = (self.prob_depressive[word] + 1) / (self.sum_tf_idf_depressive + len(list(self.prob_depressive.keys())))          
+            self.prob_depressive[word] = (self.prob_depressive[word] + 1) / (
+                        self.sum_tf_idf_depressive + len(list(self.prob_depressive.keys())))
         for word in self.tf_positive:
-            self.prob_positive[word] = (self.tf_positive[word]) * log((self.depressive_tweets + self.positive_tweets) \
-                                                          / (self.idf_depressive.get(word, 0) + self.idf_positive[word]))
+            self.prob_positive[word] = (self.tf_positive[word]) * log((self.depressive_tweets + self.positive_tweets) / (self.idf_depressive.get(word, 0) + self.idf_positive[word]))
             self.sum_tf_idf_positive += self.prob_positive[word]
         for word in self.tf_positive:
-            self.prob_positive[word] = (self.prob_positive[word] + 1) / (self.sum_tf_idf_positive + len(list(self.prob_positive.keys())))            
-        self.prob_depressive_tweet, self.prob_positive_tweet = self.depressive_tweets / self.total_tweets, self.positive_tweets / self.total_tweets         
-        
-    def calc_TF_and_IDF(self):
+            self.prob_positive[word] = (self.prob_positive[word] + 1) / (self.sum_tf_idf_positive + len(list(self.prob_positive.keys())))
+        self.prob_depressive_tweet, self.prob_positive_tweet = self.depressive_tweets / self.total_tweets, self.positive_tweets / self.total_tweets
+
+    def calc_TF_IDF(self):
         noOfMessages = self.tweets.shape[0]
         self.depressive_tweets, self.positive_tweets = self.labels.value_counts()[1], self.labels.value_counts()[0]
         self.total_tweets = self.depressive_tweets + self.positive_tweets
@@ -112,7 +115,7 @@ class TweetClassifier(object):
         self.idf_positive = dict()
         for i in range(noOfMessages):
             message_processed = process_message(self.tweets.iloc[i])
-            count = list() 
+            count = list()
             for word in message_processed:
                 if self.labels.iloc[i]:
                     self.tf_depressive[word] = self.tf_depressive.get(word, 0) + 1
@@ -127,10 +130,10 @@ class TweetClassifier(object):
                     self.idf_depressive[word] = self.idf_depressive.get(word, 0) + 1
                 else:
                     self.idf_positive[word] = self.idf_positive.get(word, 0) + 1
-                    
+
     def classify(self, processed_message):
         pDepressive, pPositive = 0, 0
-        for word in processed_message:                
+        for word in processed_message:
             if word in self.prob_depressive:
                 pDepressive += log(self.prob_depressive[word])
             else:
@@ -140,11 +143,11 @@ class TweetClassifier(object):
                 pPositive += log(self.prob_positive[word])
             else:
                 if self.method == 'tf-idf':
-                    pPositive -= log(self.sum_tf_idf_positive + len(list(self.prob_positive.keys()))) 
+                    pPositive -= log(self.sum_tf_idf_positive + len(list(self.prob_positive.keys())))
             pDepressive += log(self.prob_depressive_tweet)
             pPositive += log(self.prob_positive_tweet)
         return pDepressive >= pPositive
-    
+
     def predict(self, testData):
         result = dict()
         for (i, message) in enumerate(testData):
@@ -152,12 +155,12 @@ class TweetClassifier(object):
             result[i] = int(self.classify(processed_message))
         return result
 
-# Training the DDM    
+    # Training the DDM
 
     def train(self):
-        self.calc_TF_and_IDF()
+        self.calc_TF_IDF()
         if self.method == 'tf-idf':
-            self.calc_TF_IDF()
+            self.get_TF_IDF()
 
 sc_tf_idf = TweetClassifier(trainData, 'tf-idf')
 sc_tf_idf.train()
@@ -180,7 +183,7 @@ def metrics(labels, predictions):
     print("Recall: ", recall)
     print("F-score: ", Fscore)
     print("Accuracy: ", accuracy)
-   
+
 preds_tf_idf = sc_tf_idf.predict(testData['message'])
 metrics(testData['label'], preds_tf_idf)
 
