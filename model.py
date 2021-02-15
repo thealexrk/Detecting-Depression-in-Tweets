@@ -72,7 +72,7 @@ def process_message(message, lower_case = True, stem = True, stop_words = True, 
         words = [stemmer.stem(word) for word in words]   
     return words
 
-# Implementing TF-IDF
+# Building the TweetClassifier
 
 class TweetClassifier(object):
     def __init__(self, trainData, method = 'tf-idf'):
@@ -160,7 +160,7 @@ class TweetClassifier(object):
             result[i] = int(self.classify(processed_message))
         return result
     
-# Preparing etc
+# Result Preparation
 
 def metrics(labels, predictions):
     true_pos, true_neg, false_pos, false_neg = 0, 0, 0, 0
@@ -185,7 +185,6 @@ sc_tf_idf = TweetClassifier(trainData, 'tf-idf')
 sc_tf_idf.train()
 preds_tf_idf = sc_tf_idf.predict(testData['message'])
 metrics(testData['label'], preds_tf_idf)
-
 
 # Predictions
 
