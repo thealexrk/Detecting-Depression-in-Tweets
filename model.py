@@ -181,7 +181,6 @@ def metrics(labels, predictions):
 
 sc_tf_idf = TweetClassifier(trainData, 'tf-idf')
 sc_tf_idf.train()
-
 preds_tf_idf = sc_tf_idf.predict(testData['message'])
 metrics(testData['label'], preds_tf_idf)
 
