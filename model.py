@@ -130,6 +130,11 @@ class TweetClassifier(object):
                     self.idf_depressive[word] = self.idf_depressive.get(word, 0) + 1
                 else:
                     self.idf_positive[word] = self.idf_positive.get(word, 0) + 1
+                                       
+    def train(self):
+        self.calc_TF_IDF()
+        if self.method == 'tf-idf':
+            self.get_TF_IDF()
 
     def classify(self, processed_message):
         pDepressive, pPositive = 0, 0
@@ -156,11 +161,6 @@ class TweetClassifier(object):
         return result
 
     # Training the DDM
-
-    def train(self):
-        self.calc_TF_IDF()
-        if self.method == 'tf-idf':
-            self.get_TF_IDF()
 
 sc_tf_idf = TweetClassifier(trainData, 'tf-idf')
 sc_tf_idf.train()
