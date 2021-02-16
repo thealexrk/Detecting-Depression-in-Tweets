@@ -187,9 +187,6 @@ metrics(testData['label'], preds_tf_idf)
 
 # Predictions
 
-pm = process_message('All I want is to feel happy and fulfilled again...')
-sc_tf_idf.classify(pm)
-
 pm = process_message('Feeling happy, motivated, and ready to make a positive difference in the world!')
 sc_tf_idf.classify(pm)
 
@@ -209,4 +206,7 @@ pm = process_message('Why do I always feel like I could cry at any moment?')
 sc_tf_idf.classify(pm)
 
 pm = process_message('I am never going to lose 20lbs - why even bother trying?')
+sc_tf_idf.classify(pm)
+
+pm = process_message('All I want is to feel happy and fulfilled again...')
 sc_tf_idf.classify(pm)
