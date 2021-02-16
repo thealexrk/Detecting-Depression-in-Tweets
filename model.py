@@ -187,16 +187,16 @@ metrics(testData['label'], preds_tf_idf)
 
 # Predictions
 
-pm = process_message('Feeling happy, motivated, and ready to make a positive difference in the world!')
-sc_tf_idf.classify(pm)
-
-pm = process_message('My baby boy just said his first words - feeling over the moon!')
+pm = process_message('Feeling happy, motivated and ready to positively impact the world!')
 sc_tf_idf.classify(pm)
 
 pm = process_message('1382  Willis Avenue. THE best ice cream. Thank me later.')
 sc_tf_idf.classify(pm)
 
-pm = process_message('Literally crazy to look back at old pictures of my overweight, demotivated, depressed 14 year old self.')
+pm = process_message('My baby boy just said his first words - feeling over the moon!')
+sc_tf_idf.classify(pm)
+
+pm = process_message('I used to be overweight, demotivated, and depressed. Boy have times changed')
 sc_tf_idf.classify(pm)
 
 pm = process_message('Feeling hopeless, depressed and miserable all the time.')
