@@ -187,15 +187,6 @@ metrics(testData['label'], preds_tf_idf)
 
 # Predictions
 
-pm = process_message('Feeling hopeless, depressed and miserable all the time.')
-sc_tf_idf.classify(pm)
-
-pm = process_message('Why do I always feel like I could cry at any moment?')
-sc_tf_idf.classify(pm)
-
-pm = process_message('I am never going to lose 20lbs - why even bother trying?')
-sc_tf_idf.classify(pm)
-
 pm = process_message('All I want is to feel happy and fulfilled again...')
 sc_tf_idf.classify(pm)
 
@@ -209,4 +200,13 @@ pm = process_message('1382  Willis Avenue. THE best ice cream. Thank me later.')
 sc_tf_idf.classify(pm)
 
 pm = process_message('Literally crazy to look back at old pictures of my overweight, demotivated, depressed 14 year old self.')
+sc_tf_idf.classify(pm)
+
+pm = process_message('Feeling hopeless, depressed and miserable all the time.')
+sc_tf_idf.classify(pm)
+
+pm = process_message('Why do I always feel like I could cry at any moment?')
+sc_tf_idf.classify(pm)
+
+pm = process_message('I am never going to lose 20lbs - why even bother trying?')
 sc_tf_idf.classify(pm)
