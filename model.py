@@ -73,7 +73,7 @@ def process_message(message, lower_case=True, stem=True, stop_words=True, gram=2
         words = [stemmer.stem(word) for word in words]
     return words
 
-# Creating the TweetClassifier Class
+# Creating the TweetClassifier
 
 class TweetClassifier(object):
     
