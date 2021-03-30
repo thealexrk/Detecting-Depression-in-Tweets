@@ -1,4 +1,4 @@
-# Detecting-Depression-in-Tweets
+# Detecting Depression in Tweets
 A sentiment analysis approach to depression detection via Twitter usage.
 
 Check out the accompanying article here: https://thealexk.medium.com/ddm-detecting-depression-in-tweets-bd9866015f6e
